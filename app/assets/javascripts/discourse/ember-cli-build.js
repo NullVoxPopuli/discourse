@@ -24,7 +24,38 @@ module.exports = function (defaults) {
   const isProduction = EmberApp.env().includes("production");
   const isTest = EmberApp.env().includes("test");
 
-  const app = new EmberApp(defaults, {
+  const webpackConfig = {
+    // Workarounds for https://github.com/ef4/ember-auto-import/issues/519 and https://github.com/ef4/ember-auto-import/issues/478
+    devtool: isProduction ? false : "source-map", // Sourcemaps contain reference to the ephemeral broccoli cache dir, which changes on every deploy
+    optimization: {
+      moduleIds: "size", // Consistent module references https://github.com/ef4/ember-auto-import/issues/478#issuecomment-1000526638
+    },
+    resolve: {
+      fallback: {
+        // Sinon needs a `util` polyfill
+        util: require.resolve("util/"),
+      },
+    },
+    module: {
+      rules: [
+        // Sinon/`util` polyfill accesses the `process` global,
+        // so we need to provide a mock
+        {
+          test: require.resolve("util/"),
+          use: [
+            {
+              loader: "imports-loader",
+              options: {
+                additionalCode: "var process = { env: {} };",
+              },
+            },
+          ],
+        },
+      ],
+    },
+  };
+
+  let app = new EmberApp(defaults, {
     autoRun: false,
     "ember-qunit": {
       insertContentForTestBody: false,
@@ -38,36 +69,7 @@ module.exports = function (defaults) {
     autoImport: {
       forbidEval: true,
       insertScriptsAt: "ember-auto-import-scripts",
-      webpack: {
-        // Workarounds for https://github.com/ef4/ember-auto-import/issues/519 and https://github.com/ef4/ember-auto-import/issues/478
-        devtool: isProduction ? false : "source-map", // Sourcemaps contain reference to the ephemeral broccoli cache dir, which changes on every deploy
-        optimization: {
-          moduleIds: "size", // Consistent module references https://github.com/ef4/ember-auto-import/issues/478#issuecomment-1000526638
-        },
-        resolve: {
-          fallback: {
-            // Sinon needs a `util` polyfill
-            util: require.resolve("util/"),
-          },
-        },
-        module: {
-          rules: [
-            // Sinon/`util` polyfill accesses the `process` global,
-            // so we need to provide a mock
-            {
-              test: require.resolve("util/"),
-              use: [
-                {
-                  loader: "imports-loader",
-                  options: {
-                    additionalCode: "var process = { env: {} };",
-                  },
-                },
-              ],
-            },
-          ],
-        },
-      },
+      webpack: webpackConfig,
     },
     fingerprint: {
       // Handled by Rails asset pipeline
@@ -182,29 +184,47 @@ module.exports = function (defaults) {
   const terserPlugin = app.project.findAddonByName("ember-cli-terser");
   const applyTerser = (tree) => terserPlugin.postprocessTree("all", tree);
 
-  return mergeTrees([
-    createI18nTree(discourseRoot, vendorJs),
-    parsePluginClientSettings(discourseRoot, vendorJs, app),
-    app.toTree(),
-    funnel(`${discourseRoot}/public/javascripts`, { destDir: "javascripts" }),
-    funnel(`${vendorJs}/highlightjs`, {
-      files: ["highlight-test-bundle.min.js"],
-      destDir: "assets/highlightjs",
-    }),
-    applyTerser(
-      concat(mergeTrees([app.options.adminTree]), {
-        inputFiles: ["**/*.js"],
-        outputFile: `assets/admin.js`,
-      })
-    ),
-    applyTerser(
-      concat(mergeTrees([app.options.wizardTree]), {
-        inputFiles: ["**/*.js"],
-        outputFile: `assets/wizard.js`,
-      })
-    ),
-    applyTerser(prettyTextEngine(app)),
-    generateScriptsTree(app),
-    applyTerser(discoursePluginsTree),
-  ]);
+  // TODO: convert to unplugin
+  // const mergedApp = mergeTrees([
+  //   createI18nTree(discourseRoot, vendorJs),
+  //   parsePluginClientSettings(discourseRoot, vendorJs, app),
+  //   app.toTree(),
+  //   funnel(`${discourseRoot}/public/javascripts`, { destDir: "javascripts" }),
+  //   funnel(`${vendorJs}/highlightjs`, {
+  //     files: ["highlight-test-bundle.min.js"],
+  //     destDir: "assets/highlightjs",
+  //   }),
+  //   applyTerser(
+  //     concat(mergeTrees([app.options.adminTree]), {
+  //       inputFiles: ["**/*.js"],
+  //       outputFile: `assets/admin.js`,
+  //     })
+  //   ),
+  //   applyTerser(
+  //     concat(mergeTrees([app.options.wizardTree]), {
+  //       inputFiles: ["**/*.js"],
+  //       outputFile: `assets/wizard.js`,
+  //     })
+  //   ),
+  //   applyTerser(prettyTextEngine(app)),
+  //   generateScriptsTree(app),
+  //   applyTerser(discoursePluginsTree),
+  // ]);
+
+  const { Webpack } = require("@embroider/webpack");
+
+  // Docs: https://github.com/embroider-build/embroider/
+  return require("@embroider/compat").compatBuild(app, Webpack, {
+    extraPublicTrees: [],
+    // staticAddonTestSupportTrees: true,
+    // staticAddonTrees: true,
+    // staticHelpers: true,
+    // staticModifiers: true,
+    // staticComponents: true,
+    // splitAtRoutes: ["route.name"], // can also be a RegExp
+    packagerOptions: {
+      // publicAssetURL: '...',
+      webpackConfig,
+    },
+  });
 };
