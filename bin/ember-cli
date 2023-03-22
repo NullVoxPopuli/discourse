@@ -57,6 +57,7 @@ if !args.include?("test") && !args.include?("build") && !args.include?("--proxy"
 end
 
 exit 1 if !system "yarn -s install --cwd #{YARN_DIR}"
+exit 1 if !system "yarn -s postinstall --cwd #{File.join(YARN_DIR, '..')}"
 
 yarn_env = {}
 if ARGV.include?("--forward-host")
