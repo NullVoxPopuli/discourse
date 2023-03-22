@@ -165,18 +165,18 @@ module.exports = function (defaults) {
 
   // WARNING: We should only import scripts here if they are not in NPM.
   // For example: our very specific version of bootstrap-modal.
-  // app.import(vendorJs + "bootbox.js");
-  // app.import("node_modules/bootstrap/js/modal.js");
-  // app.import(vendorJs + "caret_position.js");
-  // app.import("node_modules/ember-source/dist/ember-template-compiler.js", {
-  //   type: "test",
-  // });
-  // app.import(discourseRoot + "/app/assets/javascripts/polyfills.js");
+  app.import(vendorJs + "bootbox.js");
+  app.import("node_modules/bootstrap/js/modal.js");
+  app.import(vendorJs + "caret_position.js");
+  app.import("node_modules/ember-source/dist/ember-template-compiler.js", {
+    type: "test",
+  });
+  app.import(discourseRoot + "/app/assets/javascripts/polyfills.js");
 
-  // app.import(
-  //   discourseRoot +
-  //     "/app/assets/javascripts/discourse/public/assets/scripts/module-shims.js"
-  // );
+  app.import(
+    discourseRoot +
+      "/app/assets/javascripts/discourse/public/assets/scripts/module-shims.js"
+  );
 
   // const discoursePluginsTree = app.project
   //   .findAddonByName("discourse-plugins")
