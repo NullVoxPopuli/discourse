@@ -110,9 +110,9 @@
     "edition": "default"
   },
   "devDependencies": {
-    "@embroider/compat": "^2.1.1-unstable.00ec2e7",
-    "@embroider/core": "^2.1.1-unstable.00ec2e7",
-    "@embroider/webpack": "^2.1.1-unstable.00ec2e7",
+    "@embroider/compat": "^1.0.0",
+    "@embroider/core": "^1.0.0",
+    "@embroider/webpack": "^1.0.0",
     "ember-cached-decorator-polyfill": "^1.0.1",
     "ember-cli-deprecation-workflow": "^2.1.0",
     "ember-exam": "^8.0.0"
