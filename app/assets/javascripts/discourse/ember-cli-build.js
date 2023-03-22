@@ -116,55 +116,55 @@ module.exports = function (defaults) {
   // Patching a private method is not great, but there's no other way for us to tell
   // Ember CLI that we want the tests alone in a package without helpers/fixtures, since
   // we re-use those in the theme tests.
-  // app._defaultPackager.packageApplicationTests = function (tree) {
-  //   let appTestTrees = []
-  //     .concat(
-  //       this.packageEmberCliInternalFiles(),
-  //       this.packageTestApplicationConfig(),
-  //       tree
-  //     )
-  //     .filter(Boolean);
+  app._defaultPackager.packageApplicationTests = function (tree) {
+    let appTestTrees = []
+      .concat(
+        this.packageEmberCliInternalFiles(),
+        this.packageTestApplicationConfig(),
+        tree
+      )
+      .filter(Boolean);
 
-  //   appTestTrees = mergeTrees(appTestTrees, {
-  //     overwrite: true,
-  //     annotation: "TreeMerger (appTestTrees)",
-  //   });
+    appTestTrees = mergeTrees(appTestTrees, {
+      overwrite: true,
+      annotation: "TreeMerger (appTestTrees)",
+    });
 
-  //   let tests = concat(appTestTrees, {
-  //     inputFiles: ["**/tests/**/*-test.js"],
-  //     headerFiles: ["vendor/ember-cli/tests-prefix.js"],
-  //     footerFiles: ["vendor/ember-cli/app-config.js"],
-  //     outputFile: "/assets/core-tests.js",
-  //     annotation: "Concat: Core Tests",
-  //     sourceMapConfig: false,
-  //   });
+    let tests = concat(appTestTrees, {
+      inputFiles: ["**/tests/**/*-test.js"],
+      headerFiles: ["vendor/ember-cli/tests-prefix.js"],
+      footerFiles: ["vendor/ember-cli/app-config.js"],
+      outputFile: "/assets/core-tests.js",
+      annotation: "Concat: Core Tests",
+      sourceMapConfig: false,
+    });
 
-  //   let testHelpers = concat(appTestTrees, {
-  //     inputFiles: [
-  //       "**/tests/test-boot-ember-cli.js",
-  //       "**/tests/helpers/**/*.js",
-  //       "**/tests/fixtures/**/*.js",
-  //       "**/tests/setup-tests.js",
-  //     ],
-  //     outputFile: "/assets/test-helpers.js",
-  //     annotation: "Concat: Test Helpers",
-  //     sourceMapConfig: false,
-  //   });
+    let testHelpers = concat(appTestTrees, {
+      inputFiles: [
+        "**/tests/test-boot-ember-cli.js",
+        "**/tests/helpers/**/*.js",
+        "**/tests/fixtures/**/*.js",
+        "**/tests/setup-tests.js",
+      ],
+      outputFile: "/assets/test-helpers.js",
+      annotation: "Concat: Test Helpers",
+      sourceMapConfig: false,
+    });
 
-  //   if (isTest) {
-  //     return mergeTrees([
-  //       tests,
-  //       testHelpers,
-  //       discourseScss(`${discourseRoot}/app/assets/stylesheets`, "qunit.scss"),
-  //       discourseScss(
-  //         `${discourseRoot}/app/assets/stylesheets`,
-  //         "qunit-custom.scss"
-  //       ),
-  //     ]);
-  //   } else {
-  //     return mergeTrees([tests, testHelpers]);
-  //   }
-  // };
+    if (isTest) {
+      return mergeTrees([
+        tests,
+        testHelpers,
+        discourseScss(`${discourseRoot}/app/assets/stylesheets`, "qunit.scss"),
+        discourseScss(
+          `${discourseRoot}/app/assets/stylesheets`,
+          "qunit-custom.scss"
+        ),
+      ]);
+    } else {
+      return mergeTrees([tests, testHelpers]);
+    }
+  };
 
   // WARNING: We should only import scripts here if they are not in NPM.
   // For example: our very specific version of bootstrap-modal.
