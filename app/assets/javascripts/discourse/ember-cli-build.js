@@ -166,30 +166,20 @@ module.exports = function (defaults) {
   //   }
   // };
 
-  // @ember/jquery introduces a shim which triggers the ember-global deprecation.
-  // We remove that shim, and re-implement ourselves in the deprecate-jquery-integration pre-initializer
-  // const vendorScripts = app._scriptOutputFiles["/assets/vendor.js"];
-  // const componentDollarShimIndex = vendorScripts.indexOf(
-  //   "vendor/jquery/component.dollar.js"
-  // );
-  // if (componentDollarShimIndex) {
-  //   vendorScripts.splice(componentDollarShimIndex, 1);
-  // }
-
   // WARNING: We should only import scripts here if they are not in NPM.
   // For example: our very specific version of bootstrap-modal.
-  // app.import(vendorJs + "bootbox.js");
-  // app.import("node_modules/bootstrap/js/modal.js");
-  // app.import(vendorJs + "caret_position.js");
-  // app.import("node_modules/ember-source/dist/ember-template-compiler.js", {
-  //   type: "test",
-  // });
-  // app.import(discourseRoot + "/app/assets/javascripts/polyfills.js");
+  app.import(vendorJs + "bootbox.js");
+  app.import("node_modules/bootstrap/js/modal.js");
+  app.import(vendorJs + "caret_position.js");
+  app.import("node_modules/ember-source/dist/ember-template-compiler.js", {
+    type: "test",
+  });
+  app.import(discourseRoot + "/app/assets/javascripts/polyfills.js");
 
-  // app.import(
-  //   discourseRoot +
-  //     "/app/assets/javascripts/discourse/public/assets/scripts/module-shims.js"
-  // );
+  app.import(
+    discourseRoot +
+      "/app/assets/javascripts/discourse/public/assets/scripts/module-shims.js"
+  );
 
   // const discoursePluginsTree = app.project
   //   .findAddonByName("discourse-plugins")
