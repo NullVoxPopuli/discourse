@@ -1,0 +1,13 @@
+diff --git a/node_modules/handlebars/package.json b/node_modules/handlebars/package.json
+index ffeaf7d..4182b87 100644
+--- a/node_modules/handlebars/package.json
++++ b/node_modules/handlebars/package.json
+@@ -76,7 +76,7 @@
+   },
+   "main": "lib/index.js",
+   "types": "types/index.d.ts",
+-  "browser": {
++  "exports": {
+     ".": "./dist/cjs/handlebars.js",
+     "./runtime": "./dist/cjs/handlebars.runtime.js"
+   },
