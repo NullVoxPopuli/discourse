@@ -1,17 +1,18 @@
 import EmberObject, { get } from "@ember/object";
 import { alias, sort } from "@ember/object/computed";
-import Archetype from "discourse/models/archetype";
-import Category from "discourse/models/category";
-import PostActionType from "discourse/models/post-action-type";
+import Archetype from "./archetype";
+// import Category from "./category";
+import PostActionType from "./post-action-type";
 import PreloadStore from "discourse/lib/preload-store";
-import RestModel from "discourse/models/rest";
+import RestModel from "./rest";
 import Singleton from "discourse/mixins/singleton";
-import TrustLevel from "discourse/models/trust-level";
+import TrustLevel from "./trust-level";
 import deprecated from "discourse-common/lib/deprecated";
 import discourseComputed from "discourse-common/utils/decorators";
 import { getOwner } from "discourse-common/lib/get-owner";
 import { isEmpty } from "@ember/utils";
 import { htmlSafe } from "@ember/template";
+import { categoryUtils } from './utils';
 
 const Site = RestModel.extend({
   isReadOnly: alias("is_readonly"),
@@ -60,7 +61,7 @@ const Site = RestModel.extend({
   // Sort subcategories under parents
   @discourseComputed("categoriesByCount", "categories.[]")
   sortedCategories(categories) {
-    return Category.sortCategories(categories);
+    return categoryUtils.sortCategories(categories);
   },
 
   // Returns it in the correct order, by setting

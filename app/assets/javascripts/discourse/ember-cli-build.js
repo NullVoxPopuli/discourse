@@ -189,6 +189,10 @@ module.exports = function (defaults) {
 
   // Docs: https://github.com/embroider-build/embroider/
   return require("@embroider/compat").compatBuild(app, Webpack, {
+    // General requirements for plugins:
+    // - not loaded when they are not needed (admin, wizard, etc)
+    // - "safe mode" can help debugging plugin problems by optionally not loading some of these files
+    //   - with dynamic imports, this can be an if condition around the dynamic import
     extraPublicTrees: [
       createI18nTree(discourseRoot, vendorJs),
       parsePluginClientSettings(discourseRoot, vendorJs, app),
@@ -197,7 +201,16 @@ module.exports = function (defaults) {
         files: ["highlight-test-bundle.min.js"],
         destDir: "assets/highlightjs",
       }),
-      // TODO: switch to dynamic import
+      // TODO: switch to dynamic import?
+      // Requirements
+      //   - not loaded when a user is not an admin
+      //     - route-splitting would help here, but requires all the static flags be enabled
+      //
+      // Reason this is no longer a custom broccoli tree:
+      // Under embroider, all imports must be statically analyzable, and embroider
+      // (or rather, the underlying packager (webpack, vite), does not know how to inspect
+      //  these sorts of files)
+      //
       //   applyTerser(
       //     concat(mergeTrees([app.options.adminTree]), {
       //       inputFiles: ["**/*.js"],
@@ -205,9 +218,17 @@ module.exports = function (defaults) {
       //     })
       //   ),
 
+      // TODO: switch to dynamic import?
+      // Requirements
+      //  - not loaded unless it's needed
       // Causes:
       // BroccoliMergeTrees: Expected Broccoli node, got undefined for inputNodes[0]
       //  wizardTree is undefined
+      //
+      // Reason this is no longer a custom broccoli tree:
+      // Under embroider, all imports must be statically analyzable, and embroider
+      // (or rather, the underlying packager (webpack, vite), does not know how to inspect
+      //  these sorts of files)
       //
       // applyTerser(
       //   concat(mergeTrees([app.options.wizardTree]), {
