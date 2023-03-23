@@ -181,45 +181,52 @@ module.exports = function (defaults) {
       "/app/assets/javascripts/discourse/public/assets/scripts/module-shims.js"
   );
 
-  // const discoursePluginsTree = app.project
-  //   .findAddonByName("discourse-plugins")
-  //   .generatePluginsTree();
+  const discoursePluginsTree = app.project
+    .findAddonByName("discourse-plugins")
+    .generatePluginsTree();
 
-  // const terserPlugin = app.project.findAddonByName("ember-cli-terser");
-  // const applyTerser = (tree) => terserPlugin.postprocessTree("all", tree);
-
-  // TODO: convert to unplugin
-  // const mergedApp = mergeTrees([
-  //   createI18nTree(discourseRoot, vendorJs),
-  //   parsePluginClientSettings(discourseRoot, vendorJs, app),
-  //   app.toTree(),
-  //   funnel(`${discourseRoot}/public/javascripts`, { destDir: "javascripts" }),
-  //   funnel(`${vendorJs}/highlightjs`, {
-  //     files: ["highlight-test-bundle.min.js"],
-  //     destDir: "assets/highlightjs",
-  //   }),
-  //   applyTerser(
-  //     concat(mergeTrees([app.options.adminTree]), {
-  //       inputFiles: ["**/*.js"],
-  //       outputFile: `assets/admin.js`,
-  //     })
-  //   ),
-  //   applyTerser(
-  //     concat(mergeTrees([app.options.wizardTree]), {
-  //       inputFiles: ["**/*.js"],
-  //       outputFile: `assets/wizard.js`,
-  //     })
-  //   ),
-  //   applyTerser(prettyTextEngine(app)),
-  //   generateScriptsTree(app),
-  //   applyTerser(discoursePluginsTree),
-  // ]);
+  const terserPlugin = app.project.findAddonByName("ember-cli-terser");
+  const applyTerser = (tree) => terserPlugin.postprocessTree("all", tree);
 
   const { Webpack } = require("@embroider/webpack");
 
   // Docs: https://github.com/embroider-build/embroider/
   return require("@embroider/compat").compatBuild(app, Webpack, {
-    extraPublicTrees: [],
+    extraPublicTrees: [
+      createI18nTree(discourseRoot, vendorJs),
+      parsePluginClientSettings(discourseRoot, vendorJs, app),
+      funnel(`${discourseRoot}/public/javascripts`, { destDir: "javascripts" }),
+      funnel(`${vendorJs}/highlightjs`, {
+        files: ["highlight-test-bundle.min.js"],
+        destDir: "assets/highlightjs",
+      }),
+      // TODO: switch to dynamic import
+      //   applyTerser(
+      //     concat(mergeTrees([app.options.adminTree]), {
+      //       inputFiles: ["**/*.js"],
+      //       outputFile: `assets/admin.js`,
+      //     })
+      //   ),
+
+      // Causes:
+      // BroccoliMergeTrees: Expected Broccoli node, got undefined for inputNodes[0]
+      //  wizardTree is undefined
+      //
+      // applyTerser(
+      //   concat(mergeTrees([app.options.wizardTree]), {
+      //     inputFiles: ["**/*.js"],
+      //     outputFile: `assets/wizard.js`,
+      //   })
+      // ),
+
+
+      // Causes:
+      //  [Embroider:MacrosConfig] cannot read userConfigs until MacrosConfig has been finalized.
+      //
+      // applyTerser(prettyTextEngine(app)),
+      generateScriptsTree(app),
+      applyTerser(discoursePluginsTree),
+    ],
     // staticAddonTestSupportTrees: true,
     // staticAddonTrees: true,
     // staticHelpers: true,
