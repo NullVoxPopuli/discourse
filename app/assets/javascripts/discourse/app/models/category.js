@@ -1,9 +1,9 @@
 import discourseComputed, { on } from "discourse-common/utils/decorators";
 import { NotificationLevels } from "discourse/lib/notification-levels";
-import PermissionType from "discourse/models/permission-type";
-import RestModel from "discourse/models/rest";
-import Site from "discourse/models/site";
-import User from "discourse/models/user";
+import PermissionType from "./permission-type";
+import RestModel from "./rest";
+import Site from "./site";
+import User from "./user";
 import { ajax } from "discourse/lib/ajax";
 import { get } from "@ember/object";
 import { getOwner } from "discourse-common/lib/get-owner";
