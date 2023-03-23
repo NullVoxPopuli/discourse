@@ -17,13 +17,15 @@
     "postinstall": "yarn --silent --cwd .. patch-package"
   },
   "dependencies": {
-    "@ember/string": "^3.0.1",
+    "@babel/core": "^7.21.4",
+    "@babel/standalone": "^7.21.4",
     "@discourse/backburner.js": "^2.7.1-0",
     "@discourse/itsatrap": "^2.0.10",
     "@ember-compat/tracked-built-ins": "^0.9.1",
     "@ember/jquery": "^2.0.0",
     "@ember/legacy-built-in-components": "^0.4.2",
     "@ember/render-modifiers": "^2.0.5",
+    "@ember/string": "^3.0.1",
     "@ember/test-helpers": "^2.9.3",
     "@glimmer/component": "^1.1.2",
     "@glimmer/syntax": "^0.84.3",
@@ -63,6 +65,7 @@
     "tippy.js": "^6.3.7",
     "util": "^0.12.5",
     "virtual-dom": "^2.1.1",
+    "webpack": "^5.81.0",
     "wizard": "1.0.0",
     "xss": "^1.0.14"
   },
@@ -95,6 +98,8 @@
     "@embroider/core": "^2.0.0",
     "@embroider/compat": "^2.0.0",
     "@embroider/webpack": "^2.0.0",
+    "broccoli-concat": "^4.2.5",
+    "broccoli-plugin": "^3.0.0",
     "ember-cached-decorator-polyfill": "^1.0.1",
     "ember-cli": "~4.12.0",
     "ember-cli-app-version": "^6.0.0",

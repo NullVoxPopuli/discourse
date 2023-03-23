@@ -100,5 +100,6 @@ if ARGV.include?("-u") || ARGV.include?("--unicorn")
     Process.kill("TERM", ember_cli_pid)
   end
 else
+  puts "yarn #{args.to_a.flatten.join(' ')}"
   exec(yarn_env, "yarn", *args.to_a.flatten)
 end

@@ -3,25 +3,42 @@
   "scripts": {
     "postinstall": "patch-package"
   },
-  "workspaces": [
-    "admin",
-    "bootstrap-json",
-    "dialog-holder",
-    "discourse",
-    "discourse-common",
-    "discourse-hbr",
-    "discourse-plugins",
-    "discourse-widget-hbs",
-    "ember-cli-progress-ci",
-    "ember-production-deprecations",
-    "pretty-text",
-    "select-kit",
-    "truth-helpers",
-    "wizard"
-  ],
+  "workspaces": {
+    "packages": [
+      "admin",
+      "bootstrap-json",
+      "dialog-holder",
+      "discourse",
+      "discourse-common",
+      "discourse-hbr",
+      "discourse-plugins",
+      "discourse-widget-hbs",
+      "ember-cli-progress-ci",
+      "ember-production-deprecations",
+      "pretty-text",
+      "select-kit",
+      "truth-helpers",
+      "wizard"
+    ],
+    "nohoist": [
+      "fs-extra",
+      "**/fs-extra",
+      "fs-merger",
+      "**/fs-merger",
+      "broccoli-concat",
+      "**/broccoli-concat",
+      "broccoli-plugin",
+      "**/broccoli-plugin"
+    ]
+  },
   "resolutions": {
     "**/babel-plugin-debug-macros": "npm:@discourse/babel-plugin-debug-macros@0.4.0-pre1",
-    "**/babel-plugin-ember-template-compilation": "2.0.0"
+    "**/babel-plugin-ember-template-compilation": "2.0.0",
+    "@embroider/core": "2.1.2-unstable.df7f441",
+    "@embroider/compat": "2.1.2-unstable.df7f441",
+    "@embroider/macros": "1.10.1-unstable.df7f441",
+    "@embroider/webpack": "2.1.2-unstable.df7f441",
+    "@embroider/shared-internals": "2.0.1-unstable.df7f441"
   },
   "dependencies": {},
   "devDependencies": {
