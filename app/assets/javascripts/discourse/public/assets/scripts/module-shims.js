@@ -46,3 +46,10 @@ if (glimmerTracking.cached) {
     get: () => require("ember-cached-decorator-polyfill").cached,
   });
 }
+
+
+// define("virtual-dom", ["exports"], function (_) {
+//   "use strict";
+
+//   return __webpack_require__('@discourse/virtual-dom');
+// });

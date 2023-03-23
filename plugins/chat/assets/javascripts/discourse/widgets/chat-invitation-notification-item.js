@@ -2,7 +2,7 @@ import I18n from "I18n";
 import RawHtml from "discourse/widgets/raw-html";
 import { createWidgetFrom } from "discourse/widgets/widget";
 import { DefaultNotificationItem } from "discourse/widgets/default-notification-item";
-import { h } from "virtual-dom";
+import { h } from "@discourse/virtual-dom";
 import { formatUsername } from "discourse/lib/utilities";
 import { iconNode } from "discourse-common/lib/icon-library";
 import slugifyChannel from "discourse/plugins/chat/discourse/lib/slugify-channel";

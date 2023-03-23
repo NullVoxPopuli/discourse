@@ -6,7 +6,7 @@ import { avatarFor } from "discourse/widgets/post";
 import { createWidget } from "discourse/widgets/widget";
 import evenRound from "discourse/plugins/poll/lib/even-round";
 import { getColors } from "discourse/plugins/poll/lib/chart-colors";
-import { h } from "virtual-dom";
+import { h } from "@discourse/virtual-dom";
 import { iconNode } from "discourse-common/lib/icon-library";
 import loadScript from "discourse/lib/load-script";
 import { popupAjaxError } from "discourse/lib/ajax-error";

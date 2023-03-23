@@ -68,7 +68,7 @@ module.exports = function (defaults) {
     },
     autoImport: {
       alias: {
-        "virtual-dom": "@discourse/virtual-dom",
+        // "virtual-dom": "@discourse/virtual-dom",
       },
       forbidEval: true,
       insertScriptsAt: "ember-auto-import-scripts",
@@ -239,7 +239,6 @@ module.exports = function (defaults) {
       //     outputFile: `assets/wizard.js`,
       //   })
       // ),
-
 
       // Causes:
       //  [Embroider:MacrosConfig] cannot read userConfigs until MacrosConfig has been finalized.
