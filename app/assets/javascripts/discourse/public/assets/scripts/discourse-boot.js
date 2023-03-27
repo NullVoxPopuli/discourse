@@ -12,10 +12,6 @@
 
   window.__widget_helpers = require("discourse-widget-hbs/helpers").default;
 
-  // TODO: Eliminate this global
-  // window.virtualDom = require("virtual-dom");
-  // window.virtualDom = require("@discourse/virtual-dom");
-
   let element = document.querySelector(
     `meta[name="discourse/config/environment"]`
   );

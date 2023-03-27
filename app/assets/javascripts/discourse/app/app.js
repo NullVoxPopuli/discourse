@@ -1,3 +1,8 @@
+/**
+ * Import things used by plugins so that they don't get optimized away
+ */
+import virtualDom from "@discourse/virtual-dom";
+
 import Application from "@ember/application";
 import { buildResolver } from "discourse-common/resolver";
 import { isTesting } from "discourse-common/config/environment";
@@ -5,6 +10,9 @@ import { normalizeEmberEventHandling } from "./lib/ember-events";
 
 const _pluginCallbacks = [];
 let _unhandledThemeErrors = [];
+
+// TODO: Eliminate this global
+window.virtualDom = virtualDom;
 
 const Discourse = Application.extend({
   modulePrefix: "discourse",
@@ -28,6 +36,8 @@ const Discourse = Application.extend({
         throw new Error(moduleName + " must export an initializer.");
       }
     } catch (error) {
+      console.debug({ moduleName, error, module });
+
       if (!themeId || isTesting()) {
         throw error;
       }
