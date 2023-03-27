@@ -30,6 +30,8 @@ const Discourse = Application.extend({
         throw new Error(moduleName + " must export an initializer.");
       }
     } catch (error) {
+      console.debug({ moduleName, error, module });
+
       if (!themeId || isTesting()) {
         throw error;
       }
