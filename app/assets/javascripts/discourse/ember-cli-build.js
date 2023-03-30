@@ -36,7 +36,8 @@ module.exports = function (defaults) {
          * This doesn't actually alias the code, but allows webpack to think virtual-dom exists.
          * We've defined an AMD/requirejs entrypoint that defines virtual-dom, and points at @discourse/virtual-dom
          */
-        "virtual-dom": "@discourse/virtual-dom",
+        // "virtual-dom": "@discourse/virtual-dom",
+        // "@discourse/virtual-dom": "@discourse/virtual-dom",
       },
       fallback: {
         // Sinon needs a `util` polyfill
