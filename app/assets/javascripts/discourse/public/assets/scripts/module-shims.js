@@ -47,9 +47,19 @@ if (glimmerTracking.cached) {
   });
 }
 
+/**
+ * Provide AMD/requirejs entrypoint for the custom virtual-dom fork.
+ *
+ * In order for this to work, the app/app.js must be evaluated before any other
+ * modules try to reach for 'virtual-dom'.
+ *
+ * And note that app/app.js uses the real module name, `@discourse/virtual-dom`.
+ */
+define("virtual-dom", ["exports"], function (_) {
+  "use strict";
 
-// define("virtual-dom", ["exports"], function (_) {
-//   "use strict";
-
-//   return __webpack_require__('@discourse/virtual-dom');
-// });
+  return {
+    default: window.virtualDom,
+    __esModule: true,
+  };
+});
