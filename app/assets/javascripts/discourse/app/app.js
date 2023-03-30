@@ -1,6 +1,3 @@
-/**
- * Import things used by plugins so that they don't get optimized away
- */
 import virtualDom from "@discourse/virtual-dom";
 
 import Application from "@ember/application";
