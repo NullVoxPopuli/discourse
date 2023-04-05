@@ -1,4 +1,4 @@
-import virtualDom from "@discourse/virtual-dom";
+import "./global-compat";
 
 import Application from "@ember/application";
 import { buildResolver } from "discourse-common/resolver";
@@ -7,9 +7,6 @@ import { normalizeEmberEventHandling } from "./lib/ember-events";
 
 const _pluginCallbacks = [];
 let _unhandledThemeErrors = [];
-
-// TODO: Eliminate this global
-window.virtualDom = virtualDom;
 
 const Discourse = Application.extend({
   modulePrefix: "discourse",
