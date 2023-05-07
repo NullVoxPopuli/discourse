@@ -56,6 +56,8 @@ if !args.include?("test") && !args.include?("build") && !args.include?("--proxy"
   args << PROXY
 end
 
+puts "Running:\n\tyarn #{args.to_a.flatten.join(" ")}"
+
 exit 1 if !system "yarn -s install --cwd #{YARN_DIR}"
 exit 1 if !system "yarn -s postinstall --cwd #{File.join(YARN_DIR, '..')}"
 
@@ -71,6 +73,8 @@ if ARGV.include?("-u") || ARGV.include?("--unicorn")
 
   Thread.new do
     require 'open3'
+
+
     Open3.popen2e(yarn_env, "yarn", *args.to_a.flatten) do |i, oe, t|
       ember_cli_pid = t.pid
       puts "Ember CLI running on PID: #{ember_cli_pid}"
