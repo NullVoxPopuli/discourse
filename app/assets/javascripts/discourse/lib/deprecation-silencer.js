@@ -1,3 +1,5 @@
+const path = require("path");
+
 const SILENCED_WARN_PREFIXES = [
   "Setting the `jquery-integration` optional feature flag",
   "The Ember Classic edition has been deprecated",
@@ -43,7 +45,9 @@ module.exports = class DeprecationSilencer {
   static generateBabelPlugin() {
     return {
       _parallelBabel: {
-        requireFile: require.resolve("./deprecation-silencer"),
+        // We don't know what process from what CWD will be invoking the deprecation silencer,
+        // so we want to be immune to CWD changes by using the full path to this file.
+        requireFile: require.resolve(__filename),
         buildUsing: "babelShim",
       },
     };
