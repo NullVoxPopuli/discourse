@@ -187,19 +187,6 @@ module.exports = function (defaults) {
 
   const { Webpack } = require("@embroider/webpack");
 
-  // Override trees known to embroider
-  // If we have *new* trees that don't need to interact with existing trees
-  // They can go in the `extraPublicTrees` array in the embroider setup below
-  const i18nTree =  createI18nTree(discourseRoot, vendorJs);
-  // At this point, we don't have a vendor tree, so... let's create it -- is this allowed?
-  // app.trees.vendor = mergeTrees([
-  //   // i18nTree,
-  //   // parsePluginClientSettings(discourseRoot, vendorJs, app),
-  //   // applyTerser(prettyTextEngine(app)),
-  //   // generateScriptsTree(app),
-  //   // applyTerser(discoursePluginsTree),
-  // ]);
-
   // Docs: https://github.com/embroider-build/embroider/
   return require("@embroider/compat").compatBuild(app, Webpack, {
     // General requirements for plugins:
@@ -207,6 +194,8 @@ module.exports = function (defaults) {
     // - "safe mode" can help debugging plugin problems by optionally not loading some of these files
     //   - with dynamic imports, this can be an if condition around the dynamic import
     extraPublicTrees: [
+      createI18nTree(discourseRoot, vendorJs),
+      parsePluginClientSettings(discourseRoot, vendorJs, app),
       funnel(`${discourseRoot}/public/javascripts`, { destDir: "javascripts" }),
       funnel(`${vendorJs}/highlightjs`, {
         files: ["highlight-test-bundle.min.js"],
@@ -247,6 +236,14 @@ module.exports = function (defaults) {
       //     outputFile: `assets/wizard.js`,
       //   })
       // ),
+
+
+      // Causes:
+      //  [Embroider:MacrosConfig] cannot read userConfigs until MacrosConfig has been finalized.
+      //
+      // applyTerser(prettyTextEngine(app)),
+      generateScriptsTree(app),
+      applyTerser(discoursePluginsTree),
     ],
     // staticAddonTestSupportTrees: true,
     // staticAddonTrees: true,
