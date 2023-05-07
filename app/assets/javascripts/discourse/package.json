@@ -17,8 +17,6 @@
     "postinstall": "yarn --silent --cwd .. patch-package"
   },
   "dependencies": {
-    "@babel/core": "^7.21.4",
-    "@babel/standalone": "^7.21.4",
     "@ember/string": "^3.0.1",
     "@discourse/backburner.js": "^2.7.1-0",
     "@discourse/itsatrap": "^2.0.10",
@@ -64,7 +62,6 @@
     "select-kit": "1.0.0",
     "tippy.js": "^6.3.7",
     "util": "^0.12.5",
-    "webpack": "^5.81.0",
     "virtual-dom": "^2.1.1",
     "wizard": "1.0.0",
     "xss": "^1.0.14"

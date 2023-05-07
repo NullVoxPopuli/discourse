@@ -27,7 +27,7 @@
   resolved "https://registry.yarnpkg.com/@babel/compat-data/-/compat-data-7.21.7.tgz#61caffb60776e49a57ba61a88f02bedd8714f6bc"
   integrity sha512-KYMqFYTaenzMK4yUtf4EW9wc4N9ef80FsbMtkwool5zpwl4YrT1SdWYSTRcT94KO4hannogdS+LxY7L+arP3gA==
 
-"@babel/core@^7.12.0", "@babel/core@^7.14.5", "@babel/core@^7.16.10", "@babel/core@^7.16.7", "@babel/core@^7.21.0", "@babel/core@^7.21.4", "@babel/core@^7.21.8", "@babel/core@^7.3.4":
+"@babel/core@^7.12.0", "@babel/core@^7.14.5", "@babel/core@^7.16.10", "@babel/core@^7.16.7", "@babel/core@^7.21.0", "@babel/core@^7.21.8", "@babel/core@^7.3.4":
   version "7.21.8"
   resolved "https://registry.yarnpkg.com/@babel/core/-/core-7.21.8.tgz#2a8c7f0f53d60100ba4c32470ba0281c92aa9aa4"
   integrity sha512-YeM22Sondbo523Sz0+CirSPnbj9bG3P0CdHcBZdqUuaeOaYEFbOLoGU7lebvGP6P5J/WE9wOn7u7C4J9HvS1xQ==
@@ -1573,7 +1573,7 @@
   dependencies:
     regenerator-runtime "^0.13.11"
 
-"@babel/standalone@^7.21.4":
+"@babel/standalone@^7.21.8":
   version "7.21.8"
   resolved "https://registry.yarnpkg.com/@babel/standalone/-/standalone-7.21.8.tgz#e24b3fb8aafe1f0f3db4d2f0de59dd2baea13dc2"
   integrity sha512-Od6cBJ8dm9wjAt+3olvO7N3s+8UsCkX3hH41Ew3BlFJw1QQtbctplq3kuwzzfk+YcmXE95k8fJCzbnhf32+BxQ==
@@ -11405,7 +11405,7 @@ webpack-sources@^3.2.3:
   resolved "https://registry.yarnpkg.com/webpack-sources/-/webpack-sources-3.2.3.tgz#2d4daab8451fd4b240cc27055ff6a0c2ccea0cde"
   integrity sha512-/DyMEOrDgLKKIG0fmvtz+4dUX/3Ghozwgm6iPp8KRhvn+eQf9+Q7GWxVNMk3+uCPWfdXYC4ExGBckIXdFEfH1w==
 
-webpack@^5.81.0, webpack@^5.82.0:
+webpack@^5.82.0:
   version "5.82.0"
   resolved "https://registry.yarnpkg.com/webpack/-/webpack-5.82.0.tgz#3c0d074dec79401db026b4ba0fb23d6333f88e7d"
   integrity sha512-iGNA2fHhnDcV1bONdUu554eZx+XeldsaeQ8T67H6KKHl2nUSwX8Zm7cmzOA46ox/X1ARxf7Bjv8wQ/HsB5fxBg==
